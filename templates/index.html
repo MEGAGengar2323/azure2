@@ -19,7 +19,7 @@
 {% for post in posts %}
 <div class="card">
   <span class="badge">{{ post.subject }}</span>
-  {% if post.solved %}<span class="badge solved">解決済み!</span>{% else %}<span class="badge unsolved">未解決</span>{% endif %}
+  {% if post.solved %}<span class="badge solved">解決済み!!</span>{% else %}<span class="badge unsolved">未解決</span>{% endif %}
   <a href="{{ url_for('detail', post_id=post.id) }}"><strong>{{ post.title }}</strong></a>
   <div class="meta">{{ post.name }}・{{ post.created_short }}・回答{{ post.answer_count }}件・わかる{{ post.wakaru }}</div>
 </div>
