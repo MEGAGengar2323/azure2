@@ -1,0 +1,12 @@
+# データベース・秘密情報（公開リポジトリに入れない）
+*.db
+instance/
+.env
+*.pubxml
+*.PublishSettings
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/

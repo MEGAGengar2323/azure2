@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <span class="badge">{{ post.subject }}</span>
+  {% if post.solved %}<span class="badge solved">解決済み</span>{% else %}<span class="badge unsolved">未解決</span>{% endif %}
+  <h2>{{ post.title }}</h2>
+  <div class="meta">{{ post.name }}・{{ post.created_full }}</div>
+  <p style="white-space: pre-wrap;">{{ post.body }}</p>
+  <div class="actions">
+    <form method="post" action="{{ url_for('wakaru', post_id=post.id) }}">
+      <button type="submit" class="sub">わかる！ {{ post.wakaru }}</button>
+    </form>
+    <form method="post" action="{{ url_for('toggle_solved', post_id=post.id) }}">
+      <button type="submit">{{ '未解決に戻す' if post.solved else '解決した！' }}</button>
+    </form>
+  </div>
+</div>
+
+<h3>回答（{{ post.answer_count }}件）</h3>
+{% for a in answers %}
+<div class="card">
+  <div class="meta">{{ a.name }}・{{ a.created_short }}</div>
+  <p style="white-space: pre-wrap;">{{ a.body }}</p>
+</div>
+{% endfor %}
+
+{% if error %}<p class="error">{{ error }}</p>{% endif %}
+<form method="post">
+  <input name="name" maxlength="30" placeholder="ニックネーム" required>
+  <textarea name="body" rows="3" placeholder="回答を書く" required></textarea>
+  <button type="submit">回答する</button>
+</form>
+<p><a href="{{ url_for('index') }}">← 一覧へ戻る</a></p>
+{% endblock %}

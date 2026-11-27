@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="tabs">
+  <a href="{{ url_for('index', unsolved='1' if unsolved else None) }}" class="{{ 'on' if not current }}">すべて</a>
+  {% for s in subjects %}
+  <a href="{{ url_for('index', subject=s, unsolved='1' if unsolved else None) }}" class="{{ 'on' if s == current }}">{{ s }}</a>
+  {% endfor %}
+</div>
+
+<form method="get">
+  {% if current %}<input type="hidden" name="subject" value="{{ current }}">{% endif %}
+  <label>
+    <input type="checkbox" name="unsolved" value="1" {{ 'checked' if unsolved }} onchange="this.form.submit()">
+    未解決だけ表示
+  </label>
+  <noscript><button type="submit">絞り込む</button></noscript>
+</form>
+
+{% for post in posts %}
+<div class="card">
+  <span class="badge">{{ post.subject }}</span>
+  {% if post.solved %}<span class="badge solved">解決済み</span>{% else %}<span class="badge unsolved">未解決</span>{% endif %}
+  <a href="{{ url_for('detail', post_id=post.id) }}"><strong>{{ post.title }}</strong></a>
+  <div class="meta">{{ post.name }}・{{ post.created_short }}・回答{{ post.answer_count }}件・わかる{{ post.wakaru }}</div>
+</div>
+{% else %}
+<p>該当する質問はありません。</p>
+{% endfor %}
+{% endblock %}
